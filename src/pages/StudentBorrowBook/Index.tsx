@@ -67,7 +67,7 @@ const Books: React.FC = () => {
         0: '未归还',
         1: '已归还',
       },
-     
+
       dataIndex: 'status',
       render(_, r) {
         return r.status ? <Tag color="green">已归还</Tag> : <Tag color="pink">未归还</Tag>;
@@ -132,16 +132,18 @@ const Books: React.FC = () => {
             <PlusOutlined /> <FormattedMessage id="pages.searchTable.new" defaultMessage="New" />
           </Button>,
         ]}
-        request={async (q) => {
-          var data = await getStudentBorrowBooks({
-            skip: (q.current - 1) * q.pageSize,
-            limit: q.pageSize,
-            search: q.student,
+        request={ async (q) => {
+          var { data, response } = await getStudentBorrowBooks({
+            $skip: (q.current - 1) * q.pageSize,
+            $limit: q.pageSize,
+            $search: q.student,
             status: q.status,
+            '$sort[id]':-1
           });
+
           return {
-            data: data.list,
-            total: data.total,
+            data: data,
+            total: parseInt(response.headers.get('x-count')!),
             pageSize: q.pageSize,
             current: q.current,
           };

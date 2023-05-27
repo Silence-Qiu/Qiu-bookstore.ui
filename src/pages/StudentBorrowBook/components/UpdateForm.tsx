@@ -33,12 +33,13 @@ const UpdateForm: React.FC<Props> = ({ visible, model, onCancel, onOk }) => {
       <ProFormSelect
         showSearch
         request={async (option) => {
-          const { list } = await getStudents({
-            skip: 0,
-            limit: 10,
-            search: option.keyWords,
+          const { data } = await getStudents({
+            $skip: 0,
+            $limit: 10,
+            $search: option.keyWords,
+            '$sort[id]': -1,
           });
-          return list.map((x: any) => {
+          return data.map((x: any) => {
             return {
               label: `${x.name}-${x.class.name}-${x.class.year}`,
               value: x.id,
@@ -57,12 +58,13 @@ const UpdateForm: React.FC<Props> = ({ visible, model, onCancel, onOk }) => {
         showSearch
         rules={[{ required: true }]}
         request={async (option) => {
-          const { list } = await getBooks({
-            skip: 0,
-            limit: 10,
-            search: option.keyWords,
+          const { data } = await getBooks({
+            $skip: 0,
+            $limit: 10,
+            $search: option.keyWords,
+            '$sort[id]': -1,
           });
-          return list.map((x: any) => {
+          return data.map((x: any) => {
             return {
               label: `${x.name}-${x.number}`,
               value: x.id,

@@ -3,7 +3,7 @@ import { PlusOutlined } from '@ant-design/icons';
 import { PageContainer } from '@ant-design/pro-layout';
 import ProTable, { ActionType, ProColumns } from '@ant-design/pro-table';
 import { FormattedMessage } from 'umi';
-import { Button, Popconfirm } from 'antd';
+import { Button, Image, Popconfirm } from 'antd';
 import moment from 'moment';
 import UpdateForm from './components/UpdateForm';
 import React, { useRef, useState } from 'react';
@@ -20,6 +20,15 @@ const Books: React.FC = () => {
       title: '名称',
       dataIndex: 'name',
       width: '200px',
+    },
+    {
+      title: '图片',
+      dataIndex: 'image',
+      width: '200px',
+      hideInSearch:true,
+      render: (_,v:any) => {
+        return v.image ? <Image preview src={v.image}></Image> : '-';
+      },
     },
     {
       title: '编号',
@@ -100,14 +109,15 @@ const Books: React.FC = () => {
           </Button>,
         ]}
         request={async (q) => {
-          var data = await getBooks({
-            skip: (q.current - 1) * q.pageSize,
-            limit: q.pageSize,
-            search: q.name,
+          var { data, response } = await getBooks({
+            $skip: (q.current - 1) * q.pageSize,
+            $limit: q.pageSize,
+            $search: q.name,
+            '$sort[id]': -1,
           });
           return {
-            data: data.list,
-            total: data.total,
+            data: data,
+            total: parseInt(response.headers.get('x-count')!),
             pageSize: q.pageSize,
             current: q.current,
           };

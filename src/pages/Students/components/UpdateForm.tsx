@@ -25,20 +25,25 @@ const UpdateForm: React.FC<Props> = ({ visible, model, onCancel, onOk }) => {
       <ProFormSelect
         showSearch
         request={async (option) => {
-          const { list } = await getClasses({
-            skip: 0,
-            limit: 10,
-            search: option.keyWords,
+          const { data } = await getClasses({
+            $skip: 0,
+            $limit: 10,
+            $search: option.keyWords,
+            '$sort[id]': -1,
           });
 
-          const result: any[] = list.map((x: any) => {
+          const result: any[] = data.map((x: any) => {
             return {
               label: `${x.name}-${x.year}`,
               value: x.id,
             };
           });
 
-          if (!option.keyWords && model.classId && !result.some((x: any) => x.value == model.classId)) {
+          if (
+            !option.keyWords &&
+            model.classId &&
+            !result.some((x: any) => x.value == model.classId)
+          ) {
             const current = await getClass(model.classId);
             result.unshift({ label: `${current.name}-${current.year}`, value: current.id });
           }

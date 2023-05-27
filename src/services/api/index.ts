@@ -2,13 +2,10 @@ import { request } from 'umi';
 
 export const baseURL = '/api';
 
-export function getBooks(params: {
-  skip?: number | 1 | undefined;
-  limit: number | 10 | undefined;
-  search?: string;
-}) {
+export function getBooks(params: { [key: string]: any }) {
   return request<any>(`${baseURL}/books`, {
     method: 'GET',
+    getResponse: true,
     params: { ...params },
   });
 }
@@ -39,18 +36,10 @@ export function getBook(id: any) {
   });
 }
 
-
-
-
-
-
-export function getClasses(params: {
-  skip?: number | 1 | undefined;
-  limit: number | 10 | undefined;
-  search?: string;
-}) {
+export function getClasses(params: { [key: string]: any }) {
   return request<any>(`${baseURL}/classes`, {
     method: 'GET',
+    getResponse: true,
     params: { ...params },
   });
 }
@@ -81,21 +70,10 @@ export function getClass(id: any) {
   });
 }
 
-
-
-
-
-
-
-
-
-export function getStudents(params: {
-  skip?: number | 1 | undefined;
-  limit: number | 10 | undefined;
-  search?: string;
-}) {
+export function getStudents(params: { [key: string]: any }) {
   return request<any>(`${baseURL}/students`, {
     method: 'GET',
+    getResponse: true,
     params: { ...params },
   });
 }
@@ -126,24 +104,10 @@ export function getStudent(id: any) {
   });
 }
 
-
-
-
-
-
-
-
-
-
-
-export function getStudentBorrowBooks(params: {
-  skip?: number | 1 | undefined;
-  limit: number | 10 | undefined;
-  status?:number,
-  search?: string;
-}) {
+export function getStudentBorrowBooks(params: { [key: string]: any }) {
   return request<any>(`${baseURL}/student-borrow-books`, {
     method: 'GET',
+    getResponse: true,
     params: { ...params },
   });
 }
@@ -172,5 +136,3 @@ export function getStudentBorrowBook(id: any) {
     method: 'GET',
   });
 }
-
-

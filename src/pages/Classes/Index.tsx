@@ -79,14 +79,15 @@ const Books: React.FC = () => {
           </Button>,
         ]}
         request={async (q) => {
-          var data = await getClasses({
-            skip: (q.current - 1) * q.pageSize,
-            limit: q.pageSize,
-            search:q.name
+          var {data,response} = await getClasses({
+            $skip: (q.current - 1) * q.pageSize,
+            $limit: q.pageSize,
+            $search:q.name,
+            '$sort[id]':-1
           });
           return {
-            data: data.list,
-            total: data.total,
+            data: data,
+            total: parseInt(response.headers.get('x-count')!),
             pageSize: q.pageSize,
             current: q.current,
           };

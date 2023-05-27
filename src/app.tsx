@@ -104,6 +104,7 @@ export async function getInitialState(): Promise<{
 // ProLayout 支持的api https://procomponents.ant.design/components/layout
 export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) => {
   return {
+    iconfontUrl:'//at.alicdn.com/t/c/font_4089875_n5l3csqgmbg.js',
     rightContentRender: () => <RightContent />,
     disableContentMargin: false,
     waterMarkProps: {
