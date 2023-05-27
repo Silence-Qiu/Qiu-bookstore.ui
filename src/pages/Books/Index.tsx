@@ -24,10 +24,13 @@ const Books: React.FC = () => {
     {
       title: '图片',
       dataIndex: 'image',
-      width: '200px',
-      hideInSearch:true,
-      render: (_,v:any) => {
-        return v.image ? <Image preview src={v.image}></Image> : '-';
+      hideInSearch: true,
+      render: (_, v: any) => {
+        return (
+          <div style={{ width: '200px', height: '150px',overflow:'hidden' }}>
+            <Image preview src={v.image}></Image>
+          </div>
+        );
       },
     },
     {
